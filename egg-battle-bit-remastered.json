@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-08-30T12:53:10+02:00",
+    "exported_at": "2023-08-30T13:08:22+02:00",
     "name": "BattleBit Remastered",
     "author": "contact@clan-rmg.com",
     "description": "BattleBit Remastered Dedicated Server Wine Debian",
@@ -15,7 +15,7 @@
         "ghcr.io\/parkervcp\/yolks:wine_staging": "ghcr.io\/parkervcp\/yolks:wine_staging"
     },
     "file_denylist": [],
-    "startup": "cd \/home\/container\/ ; winetricks sound=disabled; export WINEARCH=\"win64\"; export WINEDLLOVERRIDES=\"mscoree=n,b;mshtml=n,b\"; wine \/home\/container\/BattleBit.exe -batchmode -nographics \"-Name=\"{{SERVER_NAME}}\"\" \"-Port={{SERVER_PORT}}\" \"-Hz=60\" \"-AntiCheat=EAC\" \"-MaxPing=500\" \"-VoxelMode=false\" \"-ApiEndPoint=0.0.0.0:{{SERVER_APIPORT}}\" \"-FirstMap={{SERVER_FIRSTMAP}}\" \"-FirstGamemode={{SERVER_FIRSTGAMEMODE}}\" \"-FixedSize={{SERVER_FIXEDSIZE}}\" \"-FirstSize={{SERVER_FIRSTSIZE}}\" \"-MaxSize={{SERVER_MAXSIZE}}\" \"-Password={{SERVER_PASSWORD}}\" \"-MaxPlayers={{SERVER_MAXPLAYERS}}\"",
+    "startup": "cd \/home\/container\/ ; winetricks sound=disabled; export WINEARCH=\"win64\"; export WINEDLLOVERRIDES=\"mscoree=n,b;mshtml=n,b\"; wine \/home\/container\/BattleBit.exe -batchmode -nographics \"-Name=\"{{SERVER_NAME}}\"\" \"-Port={{SERVER_PORT}}\" \"-Hz={{SERVER_HZ}}\" \"-AntiCheat=EAC\" \"-MaxPing={{SERVER_MAXPING}}\" \"-VoxelMode=false\" \"-ApiEndPoint={{SERVER_APIENDPOINT}}\" \"-FirstMap={{SERVER_FIRSTMAP}}\" \"-FirstGamemode={{SERVER_FIRSTGAMEMODE}}\" \"-FixedSize={{SERVER_FIXEDSIZE}}\" \"-FirstSize={{SERVER_FIRSTSIZE}}\" \"-MaxSize={{SERVER_MAXSIZE}}\" \"-Password={{SERVER_PASSWORD}}\" \"-MaxPlayers={{SERVER_MAXPLAYERS}}\"",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"Successfully registered to steam servers\"\r\n}",
@@ -191,23 +191,43 @@
             "field_type": "text"
         },
         {
-            "name": "Port API",
-            "description": "Port for API",
-            "env_variable": "SERVER_APIPORT",
-            "default_value": "29294",
-            "user_viewable": true,
-            "user_editable": true,
-            "rules": "required|numeric|max:65535",
-            "field_type": "text"
-        },
-        {
             "name": "STEAM AUTH URL",
-            "description": "Should return the current 2FA code in plain text",
+            "description": "Should return the current 2FA code in plain text (Only used in installation)",
             "env_variable": "STEAM_AUTH_URL",
             "default_value": "",
             "user_viewable": true,
             "user_editable": true,
             "rules": "string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server API Endpoint",
+            "description": "The API Endpoint that the server will try to connect to. Leave empty for no API",
+            "env_variable": "SERVER_APIENDPOINT",
+            "default_value": "127.0.0.1:29294",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string",
+            "field_type": "text"
+        },
+        {
+            "name": "Max Ping",
+            "description": "Maximum allowed player ping on the server",
+            "env_variable": "SERVER_MAXPING",
+            "default_value": "500",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "numeric|digits_between:1,4",
+            "field_type": "text"
+        },
+        {
+            "name": "Tickrate",
+            "description": "Server tickrate in Hz",
+            "env_variable": "SERVER_HZ",
+            "default_value": "60",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "numeric|digits_between:1,3",
             "field_type": "text"
         }
     ]
