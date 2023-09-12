@@ -35,7 +35,10 @@ cd /mnt/server/steamcmd
 chown -R root:root /mnt
 export HOME=/mnt/server
 
-STEAM_AUTH=$(wget "$STEAM_AUTH_URL" -q -O -)
+if [[ "${$STEAM_AUTH_URL}" == "" ]]; then
+else
+    STEAM_AUTH=$(wget "$STEAM_AUTH_URL" -q -O -)
+fi
 
 ## install game using steamcmd
 ./steamcmd.sh +force_install_dir /mnt/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} $( [[ "${WINDOWS_INSTALL}" == "1" ]] && printf %s '+@sSteamCmdForcePlatformType windows' ) +app_update ${SRCDS_APPID} $( [[ -z ${SRCDS_BETAID} ]] || printf %s "-beta ${SRCDS_BETAID}" ) $( [[ -z ${SRCDS_BETAPASS} ]] || printf %s "-betapassword ${SRCDS_BETAPASS}" ) ${INSTALL_FLAGS} validate +quit ## other flags may be needed depending on install. looking at you cs 1.6
